@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580499053987.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D3115F96",
+    "lastKnownWriteTime" : 1580595825,
+    "last_content_update" : 1580595825,
+    "path" : "~/Code/shiny.grid/examples/example_1.R",
+    "project_path" : "examples/example_1.R",
+    "properties" : {
+        "cursorPosition" : "22,8",
+        "scrollLine" : "22"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

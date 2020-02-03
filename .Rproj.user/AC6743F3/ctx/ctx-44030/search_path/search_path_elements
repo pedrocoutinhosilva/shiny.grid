@@ -1,0 +1,14 @@
+.GlobalEnv
+package:semantic.dashboard
+package:shinydashboard
+package:shiny
+package:shiny.grid
+tools:rstudio
+package:stats
+package:graphics
+package:grDevices
+package:utils
+package:datasets
+package:methods
+Autoloads
+package:base
