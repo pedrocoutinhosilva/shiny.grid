@@ -4,10 +4,9 @@ gridPanel <- function(
   grid_template_rows = NULL,
   grid_template_columns = NULL,
 
-  style = NULL,
-
   id = NULL,
   class = NULL,
+  style = NULL,
   position = NULL
 ) {
 
@@ -24,13 +23,13 @@ gridPanel <- function(
       }
     )
 
-  if(is.null(grid_template_columns))
-    grid_template_columns <- paste0(
-      "repeat(", length(stringi::stri_remove_empty(unlist(strsplit(grid_template_areas[1], split=" ")))), ", 1fr)")
+    if(is.null(grid_template_columns))
+      grid_template_columns <- paste0(
+        "repeat(", length(stringi::stri_remove_empty(unlist(strsplit(grid_template_areas[1], split=" ")))), ", 1fr)")
 
-  if(is.null(grid_template_rows))
-    grid_template_rows <- paste0(
-      "repeat(", length(grid_template_areas), ", 1fr)")
+    if(is.null(grid_template_rows))
+      grid_template_rows <- paste0(
+        "repeat(", length(grid_template_areas), ", 1fr)")
 
   } else {
     child_styles <- ""
