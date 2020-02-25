@@ -4,12 +4,15 @@ gridPanel <- function(
   grid_template_rows = NULL,
   grid_template_columns = NULL,
 
+  style = NULL,
+
   id = NULL,
   class = NULL,
   position = NULL
 ) {
 
-  style <- paste0(
+  wrapper_style <- paste0(
+    style,
     "height: 100%; width: 100%; ",
     "display: grid; ")
 
@@ -33,8 +36,8 @@ gridPanel <- function(
     child_styles <- ""
   }
 
-  style <- paste0(
-    style,
+  wrapper_style <- paste0(
+    wrapper_style,
     "grid-template-rows:", grid_template_rows, ";",
     "grid-template-columns:", grid_template_columns, ";",
     "grid-template-areas: '", paste0(grid_template_areas, collapse = "' '"), "';"
@@ -45,7 +48,7 @@ gridPanel <- function(
     tags$div(
       id = id,
       class = paste0(class, " ", position),
-      style = style,
+      style = wrapper_style,
       list(...)
     )
   )
