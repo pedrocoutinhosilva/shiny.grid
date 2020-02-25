@@ -10,3 +10,4 @@ License: What license is it under?
 Encoding: UTF-8
 Imports: htmltools
 LazyData: true
+RoxygenNote: 6.1.1
