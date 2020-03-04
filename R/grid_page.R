@@ -1,4 +1,4 @@
-#' Create a page with CSS grid layout
+#' Create a page a with CSS grid layout
 #'
 #' @param ... Elements to include within the page
 #' @param title The browser window title (defaults to the host URL of the page).
