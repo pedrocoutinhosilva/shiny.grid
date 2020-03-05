@@ -69,7 +69,7 @@ gridPanel <- function(...,
     children_style <- lapply(
       stringi::stri_remove_empty(unique(unlist(strsplit(areas, split=" ")))),
       function(single){
-        return(paste0("#", id, " .", single, " { grid-area: ", single, ";} "))
+        return(HTML(paste0("#", id, " > .", single, " { grid-area: ", single, ";} ")))
       }
     )
   }
