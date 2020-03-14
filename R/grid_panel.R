@@ -52,7 +52,7 @@ gridPanel <- function(...,
                       class = NULL,
                       style = NULL
                     ) {
-  id <- ifelse (!is.null(id), id, stringi::stri_rand_strings(1, 12))
+  id <- ifelse (!is.null(id), id, paste0("grid-", stringi::stri_rand_strings(1, 12)))
   children_style <- ""
 
   if (!is.null(areas)) {
@@ -83,15 +83,11 @@ gridPanel <- function(...,
     "grid-template-areas: '", paste0(areas, collapse = "' '"), "';"
   )
 
-  tagList(
-    tags$head(
-      tags$style(children_style)
-    ),
-    tags$div(
-      id = id,
-      class = class,
-      style = style,
-      list(...)
-    )
+  tags$div(
+    id = id,
+    class = class,
+    style = style,
+    list(...),
+    tags$style(children_style)
   )
 }
