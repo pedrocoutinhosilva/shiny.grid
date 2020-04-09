@@ -50,44 +50,169 @@ gridPanel <- function(...,
                       columns = NULL,
                       id = NULL,
                       class = NULL,
+                      gap = NULL,
                       style = NULL
                     ) {
+  # If there is no id, define a random one
   id <- ifelse (!is.null(id), id, paste0("grid-", stringi::stri_rand_strings(1, 12)))
-  children_style <- ""
 
-  if (!is.null(areas)) {
-    if(is.null(columns)) {
-      number_columns <- stringi::stri_remove_empty(
-        unlist(strsplit(areas[1], split=" "))
-      )
-      columns <- paste0("repeat(", length(number_columns), ", 1fr)")
+  # Preprocess missing values
+  repeatRule<- function(options) {
+    paste0("repeat(", length(options), ", 1fr)")
+  }
+
+  uniqueCols <- function(options) {
+    stringi::stri_remove_empty(
+      unlist(strsplit(options[1], split=" "))
+    )
+  }
+
+  if(!is.null(areas) && !is.list(areas)) areas <- list(default = areas)
+  if(!is.null(rows) && !is.list(rows)) rows <- list(default = rows)
+  if(!is.null(columns) && !is.list(columns)) columns <- list(default = columns)
+  if(!is.null(gap) && !is.list(gap)) gap <- list(default = gap)
+
+  if (is.null(columns)) {
+    if (!is.null(areas)) {
+      columns <- list(default = "1fr")
+      for (rule in names(areas)) {
+        columns[[rule]] <- repeatRule(uniqueCols(areas[[rule]]))
+      }
     }
-    if(is.null(rows)) {
-      rows <- paste0("repeat(", length(areas), ", 1fr)")
+  }
+  if (is.null(rows)) {
+    if (!is.null(areas)) {
+      rows <- list(default = "1fr")
+      for (rule in names(areas)) {
+        rows[[rule]] <- repeatRule(areas[[rule]])
+      }
+    }
+  }
+  if (is.null(gap)) {
+    if (!is.null(areas)) {
+      gap <- list(default = "0")
+      for (rule in names(areas)) {
+        gap[[rule]] <- "0"
+      }
+    }
+  }
+
+  # generate areas
+  css_areas <- ""
+  children_style <- ""
+  if (!is.null(areas)) {
+    if (is.list(areas)) {
+      for (rule in names(areas)) {
+        if (rule == "default") {
+          css_areas <- paste0(
+            css_areas,
+            generateRule(id, "grid-template-areas", paste0("'", paste0(areas[[rule]], collapse = "' '"), "'"))
+          )
+        } else {
+          wrapper <- getRuleWrapper(activeMediaRules[[rule]])
+          media_areas <- generateRule(id, "grid-template-areas", paste0("'", paste0(areas[[rule]], collapse = "' '"), "'"))
+          css_areas <- paste0(
+            css_areas,
+            do.call(glue::glue, list(wrapper, rules = media_areas))
+          )
+        }
+      }
+
+      children_style_target <- areas$default
+    } else {
+      css_areas <- generateRule(id, "grid-template-areas", paste0("'", paste0(areas, collapse = "' '"), "'"))
+      children_style_target <- areas
     }
 
     children_style <- lapply(
-      stringi::stri_remove_empty(unique(unlist(strsplit(areas, split=" ")))),
+      stringi::stri_remove_empty(unique(unlist(strsplit(children_style_target, split=" ")))),
       function(single){
         return(HTML(paste0("#", id, " > .", single, " { grid-area: ", single, ";} ")))
       }
     )
   }
 
-  style <- paste0(
-    style,
-    "height: 100%; width: 100%;",
-    "display: grid;",
-    "grid-template-rows:", rows, ";",
-    "grid-template-columns:", columns, ";",
-    "grid-template-areas: '", paste0(areas, collapse = "' '"), "';"
-  )
+  # generate rows
+  css_rows <- ""
+  if (!is.null(rows)) {
+    if (is.list(rows)) {
+      for (rule in names(rows)) {
+        if (rule == "default") {
+          css_rows<- paste0(
+            css_rows,
+            generateRule(id, "grid-template-rows", paste0(rows[[rule]]))
+          )
+        } else {
+          wrapper <- getRuleWrapper(activeMediaRules[[rule]])
+          media_rows <- generateRule(id, "grid-template-rows", paste0(rows[[rule]]))
+          css_rows <- paste0(
+            css_rows,
+            do.call(glue::glue, list(wrapper, rules = media_rows))
+          )
+        }
+      }
+    } else {
+      css_rows <- generateRule(id, "grid-template-rows", paste0(rows))
+    }
+  }
+
+  # generate columns
+  css_columns <- ""
+  if (!is.null(columns)) {
+    if (is.list(columns)) {
+      for (rule in names(columns)) {
+        if (rule == "default") {
+          css_columns <- paste0(
+            css_columns,
+            generateRule(id, "grid-template-columns", paste0(columns[[rule]]))
+          )
+        } else {
+          wrapper <- getRuleWrapper(activeMediaRules[[rule]])
+          media_columns <- generateRule(id, "grid-template-columns", paste0(columns[[rule]]))
+          css_columns <- paste0(
+            css_columns,
+            do.call(glue::glue, list(wrapper, rules = media_columns))
+          )
+        }
+      }
+    } else {
+      css_columns <- generateRule(id, "grid-template-columns", paste0(columns))
+    }
+  }
+
+  css_gap <- ""
+  if (!is.null(gap)) {
+    if (is.list(gap)) {
+      for (rule in names(gap)) {
+        if (rule == "default") {
+          css_gap <- paste0(
+            css_gap,
+            generateRule(id, "gap", paste0(gap[[rule]]))
+          )
+        } else {
+          wrapper <- getRuleWrapper(activeMediaRules[[rule]])
+          media_gap <- generateRule(id, "gap", paste0(gap[[rule]]))
+          css_gap <- paste0(
+            css_gap,
+            do.call(glue::glue, list(wrapper, rules = media_gap))
+          )
+        }
+      }
+    } else {
+      css_gap <- generateRule(id, "gap", paste0(gap))
+    }
+  }
 
   tags$div(
     id = id,
     class = class,
-    style = style,
+    style = paste0(
+      "height: 100%; width: 100%;",
+      "display: grid;"
+    ),
     list(...),
-    tags$style(children_style)
+    lapply(c(css_areas, css_rows, css_columns, css_gap, children_style), function(script) {
+      tags$style(script)
+    })
   )
 }

@@ -3,11 +3,26 @@ library(shiny.grid)
 
 ui <- gridPage(
     title = "Grid Panels example",
-    rows = "1fr 2fr 3fr",
-    areas = c(
-      "area-1 area-1 area-1",
-      "area-2 area-3 area-3",
-      "area-2 area-3 area-3"
+    rows = list(
+      default = "1fr 2fr 3fr",
+      xs = "1fr 1fr 1fr"
+    ),
+    areas = list(
+      default = c(
+        "area-1 area-1 area-1",
+        "area-2 area-3 area-3",
+        "area-2 area-3 area-3"
+      ),
+      xs = c(
+        "area-1",
+        "area-2",
+        "area-3"
+      )
+    ),
+    gap = list(
+      default = "0",
+      md = "20px",
+      xs = "5px"
     ),
 
     div(
@@ -48,8 +63,21 @@ ui <- gridPage(
         class = "subarea-3",
         style = "background: #FF8369; border: 5px solid gray;",
 
-        areas = c(
-          "subsubarea-1", "subsubarea-2", "subsubarea-3"
+        areas = list(
+          default = c(
+            "subsubarea-1",
+            "subsubarea-2",
+            "subsubarea-3"
+          ),
+          xs = c(
+            "subsubarea-1 subsubarea-1",
+            "subsubarea-2 subsubarea-3"
+          )
+        ),
+
+        gap = list(
+          default = "0",
+          xs = "5%"
         ),
 
         div(
