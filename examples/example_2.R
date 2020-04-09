@@ -90,9 +90,22 @@ ui <- gridPage(
           class = "subsubarea-2",
           style = "background: #72E7E8; border: 5px solid red;"
         ),
-        div(
+        gridPanel(
           class = "subsubarea-3",
-          style = "background: #8AFFB1; border: 5px solid red;"
+          style = "background: #8AFFB1; border: 5px solid red;",
+          rows = "repeat(4, 1fr)",
+
+          div(style = "background: #8AFF91; border: 3px solid green;"),
+          div(style = "background: #8AFF81; border: 3px solid green;"),
+          div(style = "background: #8AFF71; border: 3px solid green;"),
+          gridPanel(
+            style = "background: #8AFF61; border: 3px solid green;",
+            columns = "1fr 1fr 1fr",
+
+            div(style = "background: #8A1F91; border: 2px solid yellow;"),
+            div(style = "background: #8A2F81; border: 2px solid yellow;"),
+            div(style = "background: #8A3F71; border: 2px solid yellow;")
+          )
         )
       )
     )

@@ -207,6 +207,7 @@ gridPanel <- function(...,
     id = id,
     class = class,
     style = paste0(
+      style,
       "height: 100%; width: 100%;",
       "display: grid;"
     ),
