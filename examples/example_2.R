@@ -3,6 +3,7 @@ library(shiny.grid)
 
 ui <- gridPage(
     title = "Grid Panels example",
+
     rows = list(
       default = "1fr 2fr 3fr",
       xs = "1fr 1fr 1fr"
@@ -27,13 +28,13 @@ ui <- gridPage(
 
     div(
       class = "area-1",
-      style = "background: #FFD369; border: 5px solid black;",
+      style = "background: #FFD369; border: 5px solid #d48000;",
       tags$label("A simple div")
     ),
 
     gridPanel(
       class = "area-2",
-      style = "background: #E8B25F; border: 5px solid black;",
+      style = "background: #E8B25F; border: 5px solid #d48000;",
       tags$label("A simple grid panel")
     ),
 
@@ -42,7 +43,7 @@ ui <- gridPage(
       rows = "1fr 1fr 5fr",
       columns = "1fr 1fr 5fr",
 
-      style = " border: 5px solid black;",
+      style = "background: #E8B21F;  border: 5px solid #d48000;",
 
       areas = c(
         "subarea-1 subarea-1 subarea-3",
@@ -52,16 +53,16 @@ ui <- gridPage(
 
       div(
         class = "subarea-1",
-        style = "background: #FFB675; border: 5px solid gray;",
+        style = "background: #cacaca; border: 5px solid gray;",
         tags$label("A grid panel with a inner grid")
       ),
       div(
         class = "subarea-2",
-        style = "background: #E88B5F; border: 5px solid gray;"
+        style = "background: #6b6b6b; border: 5px solid gray;"
       ),
       gridPanel(
         class = "subarea-3",
-        style = "background: #FF8369; border: 5px solid gray;",
+        style = "background: #4c4c4c; border: 5px solid gray;",
 
         areas = list(
           default = c(
@@ -82,17 +83,17 @@ ui <- gridPage(
 
         div(
           class = "subsubarea-1",
-          style = "background: #71A5FF; border: 5px solid red;",
+          style = "background: #71A5FF; border: 5px solid blue;",
 
           tags$label("We need to go deeper")
         ),
         div(
           class = "subsubarea-2",
-          style = "background: #72E7E8; border: 5px solid red;"
+          style = "background: #72E7E8; border: 5px solid blue;"
         ),
         gridPanel(
           class = "subsubarea-3",
-          style = "background: #8AFFB1; border: 5px solid red;",
+          style = "background: #8AFFB1; border: 5px solid blue;",
           rows = "repeat(4, 1fr)",
 
           div(style = "background: #8AFF91; border: 3px solid green;"),
