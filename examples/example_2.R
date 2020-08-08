@@ -56,9 +56,9 @@ ui <- gridPage(
         style = "background: #cacaca; border: 5px solid gray;",
         tags$label("A grid panel with a inner grid")
       ),
-      div(
-        class = "subarea-2",
-        style = "background: #6b6b6b; border: 5px solid gray;"
+      `subarea-2` = div(
+        style = "background: #a0a0a0; border: 5px solid gray;",
+        tags$label("I dont have the right area class, but im called as a named argument")
       ),
       gridPanel(
         class = "subarea-3",

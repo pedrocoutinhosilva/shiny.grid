@@ -203,6 +203,11 @@ gridPanel <- function(...,
     }
   }
 
+  content <- list(...)
+  lapply(stringi::stri_remove_empty(names(content)), function(area) {
+    content[[area]] <<-  tagAppendAttributes(content[[area]], class = area)
+  })
+
   tags$div(
     id = id,
     class = class,
@@ -211,7 +216,7 @@ gridPanel <- function(...,
       "height: 100%; width: 100%;",
       "display: grid;"
     ),
-    list(...),
+    content,
     lapply(c(css_areas, css_rows, css_columns, css_gap, children_style), function(script) {
       tags$style(script)
     })
