@@ -9,8 +9,9 @@ gridPanel(
   areas = NULL,
   rows = NULL,
   columns = NULL,
-  id = NULL,
+  id = paste0("grid-", stringi::stri_rand_strings(1, 12)),
   class = NULL,
+  gap = NULL,
   style = NULL
 )
 }

@@ -7,19 +7,14 @@ defaultMediaRules <- list(
 )
 activeMediaRules <- defaultMediaRules
 
-getRuleWrapper <- function(options) {
+ruleWrapper <- function(options) {
   if (is.null(options$min) && is.null(options$max))
-    return ("{rules}")
+    return("{rules}")
 
-  wrapper <- "@media all "
-
-  if( !is.null(options$min))
-    wrapper <- paste0(wrapper, "and (min-width:", options$min, "px) ")
-
-  if( !is.null(options$max))
-    wrapper <- paste0(wrapper, "and (max-width:", options$max, "px) ")
-
-  return (paste0(wrapper, "{{", " {rules} ", "}} "))
+  "@media all " %>%
+    paste0(ifelse(is.null(options$min), "", glue("and (min-width: {options$min}px) "))) %>%
+    paste0(ifelse(is.null(options$max), "", glue("and (max-width: {options$max}px) "))) %>%
+    paste0(" {{", " {rules} ", "}} ")
 }
 
 unregisterMediaRule <- function(name) {
@@ -27,8 +22,5 @@ unregisterMediaRule <- function(name) {
 }
 
 registerMediaRule <- function(name, min = NULL, max = NULL) {
-  activeMediaRules[[name]] = list(
-    min = min,
-    max = max
-  )
+  activeMediaRules[[name]] = list(min = min, max = max)
 }
