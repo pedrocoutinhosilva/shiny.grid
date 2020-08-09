@@ -73,6 +73,7 @@ gridPanel(
 [gridPage()]
 
 Other grid functions: 
+\code{\link{flexPanel}()},
 \code{\link{gridPage}()}
 }
 \concept{grid functions}
